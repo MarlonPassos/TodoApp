@@ -18,7 +18,7 @@ class _TodoAppState extends State<TodoApp> {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
       theme: ThemeData(
         primarySwatch: Colors.yellow,
       ),

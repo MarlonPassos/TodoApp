@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class DialogButton extends StatelessWidget {
   final String text;
-  VoidCallback onPressed;
+  final VoidCallback onPressed;
 
-  DialogButton({
+  const DialogButton({
     Key? key,
     required this.text,
     required this.onPressed,
