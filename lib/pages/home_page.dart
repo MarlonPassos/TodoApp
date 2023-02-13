@@ -14,13 +14,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
   final TodoRepository todoRepository = TodoRepository();
+  Task? deletedTask;
+  int? deletedTaskIndex;
 
   // list of todo tasks
   List<Task> toDoList = [];
 
   // Load tasks todolist
   @override
-  void initState(){
+  void initState() {
     super.initState();
     todoRepository.getTodoList().then((value) {
       setState(() {
@@ -71,10 +73,32 @@ class _HomePageState extends State<HomePage> {
 
   // delete task
   void deleteTask(int index) {
+    deletedTask = toDoList[index];
+    deletedTaskIndex = index;
+
     setState(() {
       toDoList.removeAt(index);
     });
     todoRepository.saveTodoList(toDoList);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content:  Text(
+          'Tarefa "${deletedTask?.name.substring(0, 8)}..." removida com sucesso!',
+          style: const TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.yellow,
+        action: SnackBarAction(
+            label: 'Desfazer',
+            textColor: Colors.black,
+            onPressed: () {
+              setState(() {
+                toDoList.insert(deletedTaskIndex!, deletedTask!);
+              });
+              todoRepository.saveTodoList(toDoList);
+            }),
+        duration: const Duration(seconds: 4),
+      ),
+    );
   }
 
   @override
