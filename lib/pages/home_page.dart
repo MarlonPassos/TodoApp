@@ -72,10 +72,11 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.yellow[200],
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'To Do',
-          style: TextStyle(),
-        ),
+        title: toDoList.isEmpty
+            ? const Text(
+                'Sem tarefas',
+              )
+            : Text('${toDoList.length} Tarefas '),
         elevation: 0,
       ),
       body: ListView.builder(

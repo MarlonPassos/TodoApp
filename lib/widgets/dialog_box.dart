@@ -30,7 +30,7 @@ class DialogBox extends StatelessWidget {
               controller: controller,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Add a new task'
+                hintText: 'Adicionar nova tarefa'
               ),
             ),
             const SizedBox(
@@ -42,7 +42,7 @@ class DialogBox extends StatelessWidget {
               children: [
                 // save button
                 DialogButton(
-                  text: 'Save',
+                  text: 'Salvar',
                   onPressed: onSave,
                 ),
                 // cancel button
@@ -50,7 +50,7 @@ class DialogBox extends StatelessWidget {
                   width: 8,
                 ),
                 DialogButton(
-                  text: 'Cancel',
+                  text: 'Cancelar',
                   onPressed: onCancel,
                 )
               ],
