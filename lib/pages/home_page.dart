@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/models/todo_item.dart';
 import 'package:todolist/widgets/dialog_box.dart';
 import 'package:todolist/widgets/todo_tile.dart';
 
@@ -13,22 +14,30 @@ class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
 
   // list of todo tasks
-  List toDoList = [
-    ['Make Tutorial', false],
-    ['Do Exercise', false],
+  List<TodoItem> toDoList = [
+    TodoItem(
+      title: 'Maker tutorial',
+      dateTime: DateTime.now(),
+      completed: false,
+    ),
   ];
 
   // checkbox was tapped
   void checkBoxChanged(bool? value, int index) {
     setState(() {
-      toDoList[index][1] = !toDoList[index][1];
+      toDoList[index].completed = !toDoList[index].completed;
     });
   }
 
   // save new task
   void saveNewTask() {
     setState(() {
-      toDoList.add([_controller.text, false]);
+      TodoItem todoItem = TodoItem(
+        title: _controller.text,
+        dateTime: DateTime.now(),
+        completed: false,
+      );
+      toDoList.add(todoItem);
       _controller.clear();
     });
     Navigator.of(context).pop();
@@ -73,8 +82,8 @@ class _HomePageState extends State<HomePage> {
         itemCount: toDoList.length,
         itemBuilder: (context, index) {
           return TodoTile(
-            taskName: toDoList[index][0],
-            taskComplete: toDoList[index][1],
+            taskName: toDoList[index].title,
+            taskComplete: toDoList[index].completed,
             onChanged: (value) => checkBoxChanged(value, index),
             deleteFunction: (context) => deleteTask(index),
           );
