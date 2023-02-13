@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/models/todo_item.dart';
+import 'package:todolist/models/task.dart';
 import 'package:todolist/widgets/dialog_box.dart';
 import 'package:todolist/widgets/todo_tile.dart';
 
@@ -14,10 +14,10 @@ class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
 
   // list of todo tasks
-  List<TodoItem> toDoList = [
-    TodoItem(
-      title: 'Maker tutorial',
-      dateTime: DateTime.now(),
+  List<Task> toDoList = [
+    Task(
+      name: 'Maker tutorial',
+      createdAt: DateTime.now(),
       completed: false,
     ),
   ];
@@ -32,9 +32,9 @@ class _HomePageState extends State<HomePage> {
   // save new task
   void saveNewTask() {
     setState(() {
-      TodoItem todoItem = TodoItem(
-        title: _controller.text,
-        dateTime: DateTime.now(),
+      Task todoItem = Task(
+        name: _controller.text,
+        createdAt: DateTime.now(),
         completed: false,
       );
       toDoList.add(todoItem);
@@ -82,9 +82,9 @@ class _HomePageState extends State<HomePage> {
         itemCount: toDoList.length,
         itemBuilder: (context, index) {
           return TodoTile(
-            taskName: toDoList[index].title,
+            taskName: toDoList[index].name,
             taskComplete: toDoList[index].completed,
-            taskCreate: toDoList[index].dateTime,
+            taskCreate: toDoList[index].createdAt,
             onChanged: (value) => checkBoxChanged(value, index),
             deleteFunction: (context) => deleteTask(index),
           );
