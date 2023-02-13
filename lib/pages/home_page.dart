@@ -84,6 +84,7 @@ class _HomePageState extends State<HomePage> {
           return TodoTile(
             taskName: toDoList[index].title,
             taskComplete: toDoList[index].completed,
+            taskCreate: toDoList[index].dateTime,
             onChanged: (value) => checkBoxChanged(value, index),
             deleteFunction: (context) => deleteTask(index),
           );
