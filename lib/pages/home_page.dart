@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/models/task.dart';
+import 'package:todolist/repositories/todo_repository.dart';
 import 'package:todolist/widgets/dialog_box.dart';
 import 'package:todolist/widgets/todo_tile.dart';
 
@@ -12,21 +13,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
+  final TodoRepository todoRepository = TodoRepository();
 
   // list of todo tasks
-  List<Task> toDoList = [
-    Task(
-      name: 'Maker tutorial',
-      createdAt: DateTime.now(),
-      completed: false,
-    ),
-  ];
+  List<Task> toDoList = [];
+
+  // Load tasks todolist
+  @override
+  void initState(){
+    super.initState();
+    todoRepository.getTodoList().then((value) {
+      setState(() {
+        toDoList = value;
+      });
+    });
+  }
 
   // checkbox was tapped
   void checkBoxChanged(bool? value, int index) {
     setState(() {
       toDoList[index].completed = !toDoList[index].completed;
     });
+    todoRepository.saveTodoList(toDoList);
   }
 
   // save new task
@@ -40,6 +48,8 @@ class _HomePageState extends State<HomePage> {
       toDoList.add(todoItem);
       _controller.clear();
     });
+    // add local storage
+    todoRepository.saveTodoList(toDoList);
     Navigator.of(context).pop();
   }
 
@@ -64,6 +74,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       toDoList.removeAt(index);
     });
+    todoRepository.saveTodoList(toDoList);
   }
 
   @override
